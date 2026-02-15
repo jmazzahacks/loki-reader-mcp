@@ -1,0 +1,30 @@
+services:
+  loki-mcp:
+    image: ghcr.io/jmazzahacks/loki-reader-mcp:latest
+    container_name: loki-reader-mcp
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Loki server URL (required)
+      LOKI_URL: https://loki.example.com
+
+      # Basic auth credentials (optional, only needed if Loki is behind an auth proxy)
+      LOKI_USER: myuser
+      LOKI_PASS: mypassword
+
+      # Path to CA certificate inside the container (optional, for self-signed SSL certs)
+      LOKI_CA_CERT: /app/ca.pem
+
+      # Multi-tenant org ID (optional, only needed for shared Loki instances)
+      # LOKI_ORG_ID: tenant-1
+
+      # MCP transport mode: "stdio" for local dev, "sse" for Docker/remote
+      MCP_TRANSPORT: sse
+
+      # FastMCP network settings (only used with SSE transport)
+      FASTMCP_HOST: 0.0.0.0
+      FASTMCP_PORT: 8000
+    volumes:
+      # Mount CA certificate for self-signed Loki servers
+      - /path/to/ca.pem:/app/ca.pem:ro
