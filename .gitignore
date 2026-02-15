@@ -53,6 +53,9 @@ bin/
 include/
 pyvenv.cfg
 
+# Docker build
+VERSION
+
 # IDEs
 .vscode/
 .idea/

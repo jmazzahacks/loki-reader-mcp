@@ -137,4 +137,6 @@ mcp.tool(
 
 
 if __name__ == "__main__":
-    mcp.run()
+    transport = os.getenv("MCP_TRANSPORT", "stdio")
+    logger.info("Starting MCP server with transport=%s", transport)
+    mcp.run(transport=transport)

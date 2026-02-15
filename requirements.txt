@@ -1,0 +1,4 @@
+loki-reader-core
+mcp[cli]
+python-dotenv
+pydantic
