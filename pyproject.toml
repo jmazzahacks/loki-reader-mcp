@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "loki-reader-mcp"
+version = "0.1.0"
+description = "MCP server for reading logs from Grafana Loki"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "Jason Byteforge", email = "jmazzahacks@gmail.com" }
+]
+dependencies = [
+    "mcp[cli]",
+    "loki-reader-core",
+    "python-dotenv",
+    "pydantic",
+]
+
+[project.urls]
+Homepage = "https://github.com/jmazzahacks/loki-reader-mcp"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
