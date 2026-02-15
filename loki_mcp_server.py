@@ -92,7 +92,12 @@ tool_annotations = {
     "openWorldHint": True,
 }
 
-mcp = FastMCP("loki_mcp", lifespan=app_lifespan)
+mcp = FastMCP(
+    "loki_mcp",
+    host=os.getenv("FASTMCP_HOST", "127.0.0.1"),
+    port=int(os.getenv("FASTMCP_PORT", "8000")),
+    lifespan=app_lifespan,
+)
 
 mcp.tool(
     name="loki_query",
