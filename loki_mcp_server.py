@@ -92,6 +92,18 @@ tool_annotations = {
     "openWorldHint": True,
 }
 
+LOGQL_SYNTAX_GUIDE = (
+    "\n\nLogQL filter syntax: "
+    "Exact match: |= \"error\". "
+    "Negative match: != \"debug\". "
+    "Regex match: |~ \"(?i)error|exception|traceback\". "
+    "Negative regex: !~ \"health_check|readiness\". "
+    "Chain filters (AND): |= \"error\" |= \"timeout\". "
+    "Multiple terms (OR): use regex |~ \"term1|term2|term3\". "
+    "Case insensitive: use regex with (?i) flag. "
+    "Do NOT use \"or\" or \"and\" keywords between filter expressions."
+)
+
 mcp = FastMCP(
     "loki_mcp",
     host=os.getenv("FASTMCP_HOST", "127.0.0.1"),
@@ -103,7 +115,8 @@ mcp.tool(
     name="loki_query",
     description="Execute an instant LogQL query against Loki at a single point in time. "
     "Use for quick checks like 'show latest logs for this app'. "
-    "Timestamps are Unix nanoseconds (seconds * 1_000_000_000).",
+    "Timestamps are Unix nanoseconds (seconds * 1_000_000_000)."
+    + LOGQL_SYNTAX_GUIDE,
     annotations=tool_annotations,
 )(loki_query)
 
@@ -112,7 +125,8 @@ mcp.tool(
     description="Execute a range LogQL query against Loki over a time window. "
     "Use for investigating issues within a specific time period. "
     "Both start and end are required Unix timestamps in nanoseconds "
-    "(seconds * 1_000_000_000).",
+    "(seconds * 1_000_000_000)."
+    + LOGQL_SYNTAX_GUIDE,
     annotations=tool_annotations,
 )(loki_query_range)
 
