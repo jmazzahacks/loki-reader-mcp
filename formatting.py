@@ -9,8 +9,24 @@ from loki_reader_core.utils import ns_to_seconds
 def format_query_result(result: QueryResult) -> str:
     """Format a QueryResult as readable markdown text.
 
+    Handles all three Loki result types: streams, matrix, and vector.
+
     Args:
         result: The QueryResult from a Loki query.
+
+    Returns:
+        Markdown-formatted string with stats and log entries or metric values.
+    """
+    if result.result_type in ("matrix", "vector"):
+        return _format_metric_result(result)
+    return _format_stream_result(result)
+
+
+def _format_stream_result(result: QueryResult) -> str:
+    """Format a streams-type QueryResult as readable markdown.
+
+    Args:
+        result: The QueryResult with log streams.
 
     Returns:
         Markdown-formatted string with stats and log entries.
@@ -40,6 +56,45 @@ def format_query_result(result: QueryResult) -> str:
         for entry in stream.entries:
             timestamp_str = _format_timestamp(entry.timestamp)
             lines.append(f"`{timestamp_str}` {entry.message}")
+
+    return "\n".join(lines)
+
+
+def _format_metric_result(result: QueryResult) -> str:
+    """Format a matrix/vector-type QueryResult as readable markdown.
+
+    Args:
+        result: The QueryResult with metric series.
+
+    Returns:
+        Markdown-formatted string with stats and metric values.
+    """
+    lines: list[str] = []
+
+    lines.append(f"**Status:** {result.status}")
+    lines.append(f"**Result type:** {result.result_type}")
+    lines.append(f"**Series:** {len(result.metric_series)}")
+    lines.append(f"**Total samples:** {result.total_samples}")
+
+    if result.stats:
+        lines.append(f"**Exec time:** {result.stats.exec_time_seconds:.3f}s")
+        bytes_display = _format_bytes(result.stats.bytes_processed)
+        lines.append(f"**Bytes processed:** {bytes_display}")
+
+    if not result.metric_series:
+        lines.append("\nNo metric data found.")
+        return "\n".join(lines)
+
+    for series in result.metric_series:
+        labels_str = ", ".join(
+            f"{k}={v}" for k, v in series.labels.items()
+        )
+        lines.append(f"\n---\n### Series: {{{labels_str}}}")
+        lines.append(f"Samples: {len(series.samples)}\n")
+
+        for sample in series.samples:
+            timestamp_str = _format_timestamp(sample.timestamp)
+            lines.append(f"`{timestamp_str}` **{sample.value}**")
 
     return "\n".join(lines)
 
