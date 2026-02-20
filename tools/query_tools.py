@@ -10,17 +10,14 @@ from loki_reader_core import LokiAuthError, LokiConnectionError, LokiQueryError
 
 
 async def loki_query(params: QueryInput, ctx: Context) -> str:
-    """Execute an instant LogQL query against Loki.
+    """Query Loki logs by application name.
 
-    Runs a query at a single point in time (defaults to now).
-    Use this for quick checks like 'what are the latest logs for this app?'
-
-    Timestamps are Unix nanoseconds. To convert from seconds, multiply by
-    1_000_000_000. For example, Unix epoch 1700000000 becomes
-    1700000000000000000 in nanoseconds.
+    Auto-discovers the correct label for the application. Use 'severity'
+    to filter by minimum log level and since_minutes/since_hours/since_days
+    for a time window.
 
     Args:
-        params: Query parameters including logql, limit, and optional time.
+        params: Query parameters including app, severity, limit, and since_*.
         ctx: MCP context with lifespan state.
 
     Returns:
@@ -30,9 +27,12 @@ async def loki_query(params: QueryInput, ctx: Context) -> str:
     try:
         result = await asyncio.to_thread(
             client.query,
-            logql=params.logql,
+            app=params.app,
+            severity=params.severity,
             limit=params.limit,
-            time=params.time,
+            since_minutes=params.since_minutes,
+            since_hours=params.since_hours,
+            since_days=params.since_days,
         )
         return format_query_result(result)
     except (LokiAuthError, LokiConnectionError, LokiQueryError) as exc:

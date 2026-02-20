@@ -113,10 +113,11 @@ mcp = FastMCP(
 
 mcp.tool(
     name="loki_query",
-    description="Execute an instant LogQL query against Loki at a single point in time. "
-    "Use for quick checks like 'show latest logs for this app'. "
-    "Timestamps are Unix nanoseconds (seconds * 1_000_000_000)."
-    + LOGQL_SYNTAX_GUIDE,
+    description="Query Loki logs by application name. Auto-discovers the correct label. "
+    "Use 'severity' to filter by minimum log level (includes that level and above: "
+    "trace < debug < info < warn < error < fatal). "
+    "Use since_minutes/since_hours/since_days for a time window, or omit for a 30-day tail. "
+    "For complex LogQL queries with filters or pipelines, use loki_query_range instead.",
     annotations=tool_annotations,
 )(loki_query)
 

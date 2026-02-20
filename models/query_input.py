@@ -4,10 +4,16 @@ from pydantic import BaseModel, Field
 
 
 class QueryInput(BaseModel):
-    """Input for an instant Loki query at a single point in time."""
+    """Input for querying Loki logs by application name."""
 
-    logql: str = Field(
-        description="LogQL query string, e.g. '{job=\"myapp\"} |= \"error\"'"
+    app: str = Field(
+        description="Application name to search for. Auto-discovers the correct "
+        "label (application, app, job, service, etc.)"
+    )
+    severity: Optional[str] = Field(
+        default=None,
+        description="Minimum severity level. Includes this level and above. "
+        "Values: trace, debug, info, warn, error, fatal"
     )
     limit: int = Field(
         default=100,
@@ -15,10 +21,17 @@ class QueryInput(BaseModel):
         le=5000,
         description="Maximum number of log entries to return"
     )
-    time: Optional[int] = Field(
+    since_minutes: Optional[int] = Field(
         default=None,
-        description="Unix timestamp in nanoseconds for the query evaluation point. "
-        "Defaults to now if omitted."
+        description="Return logs from the last N minutes"
+    )
+    since_hours: Optional[int] = Field(
+        default=None,
+        description="Return logs from the last N hours"
+    )
+    since_days: Optional[int] = Field(
+        default=None,
+        description="Return logs from the last N days"
     )
 
 
