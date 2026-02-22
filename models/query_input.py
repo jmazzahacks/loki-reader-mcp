@@ -13,7 +13,7 @@ class QueryInput(BaseModel):
     severity: Optional[str] = Field(
         default=None,
         description="Minimum severity level. Includes this level and above. "
-        "Values: trace, debug, info, warn, error, fatal"
+        "Values: trace, debug, info, warn/warning, error, fatal/critical"
     )
     limit: int = Field(
         default=100,

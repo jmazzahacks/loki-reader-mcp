@@ -115,7 +115,7 @@ mcp.tool(
     name="loki_query",
     description="Query Loki logs by application name. Auto-discovers the correct label. "
     "Use 'severity' to filter by minimum log level (includes that level and above: "
-    "trace < debug < info < warn < error < fatal). "
+    "trace < debug < info < warn/warning < error < fatal/critical). "
     "Use since_minutes/since_hours/since_days for a time window, or omit for a 30-day tail. "
     "For complex LogQL queries with filters or pipelines, use loki_query_range instead.",
     annotations=tool_annotations,
