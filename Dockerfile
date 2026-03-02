@@ -20,6 +20,8 @@ EXPOSE 8000
 
 # SSE transport for Docker, bind to all interfaces
 ENV MCP_TRANSPORT=sse
+ENV MCP_HOST=0.0.0.0
+ENV MCP_PORT=8000
 ENV FASTMCP_HOST=0.0.0.0
 ENV FASTMCP_PORT=8000
 

@@ -1,4 +1,4 @@
-loki-reader-core>=0.2.0
+loki-reader-core
 mcp[cli]
 python-dotenv
 pydantic

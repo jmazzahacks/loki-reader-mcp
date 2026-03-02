@@ -108,6 +108,7 @@ mcp = FastMCP(
     "loki_mcp",
     host=os.getenv("FASTMCP_HOST", "127.0.0.1"),
     port=int(os.getenv("FASTMCP_PORT", "8000")),
+    stateless_http=True,
     lifespan=app_lifespan,
 )
 
