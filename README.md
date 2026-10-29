@@ -54,7 +54,7 @@ Edit `.env` with your Loki connection details:
 ### 4. Run tests
 
 ```bash
-pip install pytest pytest-asyncio
+pip install -r dev-requirements.txt
 pytest tests/ -v
 ```
 
