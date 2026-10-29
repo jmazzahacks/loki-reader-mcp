@@ -19,10 +19,10 @@ services:
       # Multi-tenant org ID (optional, only needed for shared Loki instances)
       # LOKI_ORG_ID: tenant-1
 
-      # MCP transport mode: "stdio" for local dev, "sse" for Docker/remote
-      MCP_TRANSPORT: sse
+      # MCP transport mode: "stdio" for local dev, "streamable-http" for Docker/remote
+      MCP_TRANSPORT: streamable-http
 
-      # FastMCP network settings (only used with SSE transport)
+      # FastMCP network settings (used with streamable-http transport)
       FASTMCP_HOST: 0.0.0.0
       FASTMCP_PORT: 8000
     volumes:

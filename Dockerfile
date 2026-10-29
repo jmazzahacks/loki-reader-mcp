@@ -18,8 +18,8 @@ USER appuser
 
 EXPOSE 8000
 
-# SSE transport for Docker, bind to all interfaces
-ENV MCP_TRANSPORT=sse
+# Streamable-http transport for Docker, bind to all interfaces
+ENV MCP_TRANSPORT=streamable-http
 ENV MCP_HOST=0.0.0.0
 ENV MCP_PORT=8000
 ENV FASTMCP_HOST=0.0.0.0
