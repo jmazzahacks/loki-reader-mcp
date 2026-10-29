@@ -1,4 +1,8 @@
 loki-reader-core
-mcp[cli]
+# Bounded to <2.0 — the 2.0 rewrite renames FastMCP and moves the
+# module paths this server uses. Unbounding without migrating the
+# server code will build green locally (against a pre-existing 1.x
+# venv) and crash-loop on the first --no-cache rebuild.
+mcp[cli]>=1.8,<2.0
 python-dotenv
 pydantic

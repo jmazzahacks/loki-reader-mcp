@@ -4,7 +4,7 @@ build-backend = "setuptools.backends._legacy:_Backend"
 
 [project]
 name = "loki-reader-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server for reading logs from Grafana Loki"
 readme = "README.md"
 license = "MIT"
@@ -13,7 +13,7 @@ authors = [
     { name = "Jason Byteforge", email = "jmazzahacks@gmail.com" }
 ]
 dependencies = [
-    "mcp[cli]",
+    "mcp[cli]>=1.8,<2.0",
     "loki-reader-core",
     "python-dotenv",
     "pydantic",
