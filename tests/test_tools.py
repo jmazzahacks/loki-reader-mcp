@@ -60,7 +60,7 @@ class TestLokiQuery:
         client.query.return_value = result
         ctx = make_mock_ctx(client)
 
-        params = QueryInput(logql='{job="testapp"}')
+        params = QueryInput(app="testapp")
 
         with patch("tools.query_tools.asyncio.to_thread", side_effect=_call_sync):
             output = await loki_query(params, ctx)
@@ -69,9 +69,12 @@ class TestLokiQuery:
         assert "test log message" in output
         assert "1 entries" in output or "Total entries:** 1" in output
         client.query.assert_called_once_with(
-            logql='{job="testapp"}',
+            app="testapp",
+            severity=None,
             limit=100,
-            time=None,
+            since_minutes=None,
+            since_hours=None,
+            since_days=None,
         )
 
     @pytest.mark.asyncio
@@ -80,7 +83,7 @@ class TestLokiQuery:
         client.query.side_effect = LokiAuthError("401 Unauthorized")
         ctx = make_mock_ctx(client)
 
-        params = QueryInput(logql='{job="testapp"}')
+        params = QueryInput(app="testapp")
 
         with patch("tools.query_tools.asyncio.to_thread", side_effect=_call_sync):
             output = await loki_query(params, ctx)
@@ -93,7 +96,7 @@ class TestLokiQuery:
         client.query.side_effect = LokiConnectionError("Connection refused")
         ctx = make_mock_ctx(client)
 
-        params = QueryInput(logql='{job="testapp"}')
+        params = QueryInput(app="testapp")
 
         with patch("tools.query_tools.asyncio.to_thread", side_effect=_call_sync):
             output = await loki_query(params, ctx)
@@ -106,7 +109,7 @@ class TestLokiQuery:
         client.query.side_effect = LokiQueryError("parse error")
         ctx = make_mock_ctx(client)
 
-        params = QueryInput(logql="bad query")
+        params = QueryInput(app="testapp")
 
         with patch("tools.query_tools.asyncio.to_thread", side_effect=_call_sync):
             output = await loki_query(params, ctx)

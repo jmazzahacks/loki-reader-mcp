@@ -10,27 +10,32 @@ from models.label_input import GetLabelsInput, GetLabelValuesInput, GetSeriesInp
 class TestQueryInput:
 
     def test_minimal_valid(self) -> None:
-        model = QueryInput(logql='{job="myapp"}')
-        assert model.logql == '{job="myapp"}'
+        model = QueryInput(app="myapp")
+        assert model.app == "myapp"
         assert model.limit == 100
-        assert model.time is None
+        assert model.severity is None
+        assert model.since_minutes is None
+        assert model.since_hours is None
+        assert model.since_days is None
 
     def test_all_fields(self) -> None:
-        model = QueryInput(logql='{job="myapp"}', limit=50, time=1700000000000000000)
+        model = QueryInput(app="myapp", severity="error", limit=50, since_hours=2)
+        assert model.app == "myapp"
+        assert model.severity == "error"
         assert model.limit == 50
-        assert model.time == 1700000000000000000
+        assert model.since_hours == 2
 
-    def test_missing_logql_raises(self) -> None:
+    def test_missing_app_raises(self) -> None:
         with pytest.raises(ValidationError):
             QueryInput()
 
     def test_limit_too_low(self) -> None:
         with pytest.raises(ValidationError):
-            QueryInput(logql='{job="myapp"}', limit=0)
+            QueryInput(app="myapp", limit=0)
 
     def test_limit_too_high(self) -> None:
         with pytest.raises(ValidationError):
-            QueryInput(logql='{job="myapp"}', limit=10000)
+            QueryInput(app="myapp", limit=10000)
 
 
 class TestQueryRangeInput:
