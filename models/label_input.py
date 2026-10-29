@@ -9,12 +9,12 @@ class GetLabelsInput(BaseModel):
     start: Optional[int] = Field(
         default=None,
         description="Start of the time range as a Unix timestamp in nanoseconds. "
-        "Optional - if omitted, Loki uses its default range."
+        "Optional - if omitted, Loki uses its default range.",
     )
     end: Optional[int] = Field(
         default=None,
         description="End of the time range as a Unix timestamp in nanoseconds. "
-        "Optional - if omitted, Loki uses its default range."
+        "Optional - if omitted, Loki uses its default range.",
     )
 
 
@@ -26,11 +26,11 @@ class GetLabelValuesInput(BaseModel):
     )
     start: Optional[int] = Field(
         default=None,
-        description="Start of the time range as a Unix timestamp in nanoseconds"
+        description="Start of the time range as a Unix timestamp in nanoseconds",
     )
     end: Optional[int] = Field(
         default=None,
-        description="End of the time range as a Unix timestamp in nanoseconds"
+        description="End of the time range as a Unix timestamp in nanoseconds",
     )
 
 
@@ -43,9 +43,9 @@ class GetSeriesInput(BaseModel):
     )
     start: Optional[int] = Field(
         default=None,
-        description="Start of the time range as a Unix timestamp in nanoseconds"
+        description="Start of the time range as a Unix timestamp in nanoseconds",
     )
     end: Optional[int] = Field(
         default=None,
-        description="End of the time range as a Unix timestamp in nanoseconds"
+        description="End of the time range as a Unix timestamp in nanoseconds",
     )

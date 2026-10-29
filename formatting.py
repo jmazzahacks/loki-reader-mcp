@@ -47,9 +47,7 @@ def _format_stream_result(result: QueryResult) -> str:
         return "\n".join(lines)
 
     for stream in result.streams:
-        labels_str = ", ".join(
-            f"{k}={v}" for k, v in stream.labels.items()
-        )
+        labels_str = ", ".join(f"{k}={v}" for k, v in stream.labels.items())
         lines.append(f"\n---\n### Stream: {{{labels_str}}}")
         lines.append(f"Entries: {len(stream.entries)}\n")
 
@@ -86,9 +84,7 @@ def _format_metric_result(result: QueryResult) -> str:
         return "\n".join(lines)
 
     for series in result.metric_series:
-        labels_str = ", ".join(
-            f"{k}={v}" for k, v in series.labels.items()
-        )
+        labels_str = ", ".join(f"{k}={v}" for k, v in series.labels.items())
         lines.append(f"\n---\n### Series: {{{labels_str}}}")
         lines.append(f"Samples: {len(series.samples)}\n")
 

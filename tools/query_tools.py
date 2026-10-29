@@ -85,7 +85,9 @@ def _handle_loki_error(exc: Exception) -> str:
         Descriptive error string.
     """
     if isinstance(exc, LokiAuthError):
-        return "**Error:** Authentication failed. Check LOKI_USER/LOKI_PASS in your .env"
+        return (
+            "**Error:** Authentication failed. Check LOKI_USER/LOKI_PASS in your .env"
+        )
     if isinstance(exc, LokiConnectionError):
         return "**Error:** Connection failed. Check LOKI_URL and network connectivity."
     if isinstance(exc, LokiQueryError):

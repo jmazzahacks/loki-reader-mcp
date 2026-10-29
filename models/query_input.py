@@ -13,25 +13,22 @@ class QueryInput(BaseModel):
     severity: Optional[str] = Field(
         default=None,
         description="Minimum severity level. Includes this level and above. "
-        "Values: trace, debug, info, warn/warning, error, fatal/critical"
+        "Values: trace, debug, info, warn/warning, error, fatal/critical",
     )
     limit: int = Field(
         default=100,
         ge=1,
         le=5000,
-        description="Maximum number of log entries to return"
+        description="Maximum number of log entries to return",
     )
     since_minutes: Optional[int] = Field(
-        default=None,
-        description="Return logs from the last N minutes"
+        default=None, description="Return logs from the last N minutes"
     )
     since_hours: Optional[int] = Field(
-        default=None,
-        description="Return logs from the last N hours"
+        default=None, description="Return logs from the last N hours"
     )
     since_days: Optional[int] = Field(
-        default=None,
-        description="Return logs from the last N days"
+        default=None, description="Return logs from the last N days"
     )
 
 
@@ -39,7 +36,7 @@ class QueryRangeInput(BaseModel):
     """Input for a Loki range query across a time window."""
 
     logql: str = Field(
-        description="LogQL query string, e.g. '{job=\"myapp\"} |= \"error\"'"
+        description='LogQL query string, e.g. \'{job="myapp"} |= "error"\''
     )
     start: int = Field(
         description="Start of the time range as a Unix timestamp in nanoseconds"
@@ -51,10 +48,10 @@ class QueryRangeInput(BaseModel):
         default=1000,
         ge=1,
         le=5000,
-        description="Maximum number of log entries to return"
+        description="Maximum number of log entries to return",
     )
     direction: str = Field(
         default="backward",
         pattern="^(forward|backward)$",
-        description="Sort order: 'backward' (newest first) or 'forward' (oldest first)"
+        description="Sort order: 'backward' (newest first) or 'forward' (oldest first)",
     )

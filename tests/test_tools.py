@@ -54,9 +54,11 @@ class TestLokiQuery:
     @pytest.mark.asyncio
     async def test_successful_query(self) -> None:
         client = MagicMock()
-        result = make_query_result([
-            (1700000000000000000, "test log message"),
-        ])
+        result = make_query_result(
+            [
+                (1700000000000000000, "test log message"),
+            ]
+        )
         client.query.return_value = result
         ctx = make_mock_ctx(client)
 
@@ -122,10 +124,12 @@ class TestLokiQueryRange:
     @pytest.mark.asyncio
     async def test_successful_range_query(self) -> None:
         client = MagicMock()
-        result = make_query_result([
-            (1700000000000000000, "log line 1"),
-            (1700000001000000000, "log line 2"),
-        ])
+        result = make_query_result(
+            [
+                (1700000000000000000, "log line 1"),
+                (1700000001000000000, "log line 2"),
+            ]
+        )
         client.query_range.return_value = result
         ctx = make_mock_ctx(client)
 

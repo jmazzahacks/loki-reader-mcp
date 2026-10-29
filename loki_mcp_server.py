@@ -50,11 +50,13 @@ def create_loki_client() -> LokiClient:
     if user and password:
         auth = (user, password)
 
-    logger.info("Loki connection: url=%s, auth=%s, ca_cert=%s, org_id=%s",
-                url,
-                "yes" if auth else "none",
-                ca_cert if ca_cert else "none",
-                org_id if org_id else "none")
+    logger.info(
+        "Loki connection: url=%s, auth=%s, ca_cert=%s, org_id=%s",
+        url,
+        "yes" if auth else "none",
+        ca_cert if ca_cert else "none",
+        org_id if org_id else "none",
+    )
 
     return LokiClient(
         base_url=url,
@@ -94,14 +96,14 @@ tool_annotations = {
 
 LOGQL_SYNTAX_GUIDE = (
     "\n\nLogQL filter syntax: "
-    "Exact match: |= \"error\". "
-    "Negative match: != \"debug\". "
-    "Regex match: |~ \"(?i)error|exception|traceback\". "
-    "Negative regex: !~ \"health_check|readiness\". "
-    "Chain filters (AND): |= \"error\" |= \"timeout\". "
-    "Multiple terms (OR): use regex |~ \"term1|term2|term3\". "
+    'Exact match: |= "error". '
+    'Negative match: != "debug". '
+    'Regex match: |~ "(?i)error|exception|traceback". '
+    'Negative regex: !~ "health_check|readiness". '
+    'Chain filters (AND): |= "error" |= "timeout". '
+    'Multiple terms (OR): use regex |~ "term1|term2|term3". '
     "Case insensitive: use regex with (?i) flag. "
-    "Do NOT use \"or\" or \"and\" keywords between filter expressions."
+    'Do NOT use "or" or "and" keywords between filter expressions.'
 )
 
 mcp = FastMCP(
@@ -127,8 +129,7 @@ mcp.tool(
     description="Execute a range LogQL query against Loki over a time window. "
     "Use for investigating issues within a specific time period. "
     "Both start and end are required Unix timestamps in nanoseconds "
-    "(seconds * 1_000_000_000)."
-    + LOGQL_SYNTAX_GUIDE,
+    "(seconds * 1_000_000_000)." + LOGQL_SYNTAX_GUIDE,
     annotations=tool_annotations,
 )(loki_query_range)
 
